@@ -1,5 +1,7 @@
 package com.mehdisarf.StartSpringImplMehdiSarf.model;
 
+import com.mehdisarf.StartSpringImplMehdiSarf.LoggedUserManagement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -9,9 +11,24 @@ public class LoginProcessor {
 
     private String username;
     private String password;
+    private LoggedUserManagement loggedUserManagement;
 
-    public boolean authenticate() {
-        return "mehdi".equals(username) && "123".equals(password);
+    @Autowired
+    public LoginProcessor(LoggedUserManagement loggedUserManagement) {
+        this.loggedUserManagement = loggedUserManagement;
+    }
+
+
+    public boolean login() {
+
+        boolean loginResult = false;
+
+        if ("mehdi".equals(username) && "123".equals(password)) {
+            loginResult = true;
+            loggedUserManagement.setUsername(username);
+        }
+
+        return loginResult;
     }
 
     public String getUsername() {

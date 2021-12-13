@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
 
-    private LoginProcessor loginProcessor;
+    private final LoginProcessor loginProcessor;
 
     @Autowired
     public LoginController(LoginProcessor loginProcessor) {
@@ -31,23 +31,15 @@ public class LoginController {
 
         // validation process
         loginProcessor.setUsername(username);
-        loginProcessor.setPassword(password); // farz kon dar hamin lahze ye user dg
-        // mikhad log in kone. vaqti flow, baraye un mirese be in Controller,
-        // va mikhad constructor DI anjam bede, farz kon age moqeye autowired
-        // referenceii be hamun instance qabli e LoginProcessor ro barmigardund be onvane
-        // arguman e constructor, unvaqt vaqti flow miresid be in 2 khat bala, tamame
-        // etelaate avali az beyn miraft va override mishod.
-        // yani amalan yejur race shekl migereft sare un tak-instance va un tak-instance
-        // mishod resource e moshtarak.
+        loginProcessor.setPassword(password);
 
-        boolean loggedIn = loginProcessor.authenticate();
+        boolean loggedIn = loginProcessor.login();
 
         if (loggedIn) {
-            model.addAttribute("message", "You are now logged in.");
-        } else {
-            model.addAttribute("message", "Login failed!");
+            return "redirect:/main";
         }
 
+        model.addAttribute("message", "Login failed!");
         return "login.html";
     }
 }
