@@ -1,8 +1,9 @@
 package com.mehdisarf.StartSpringImplMehdiSarf.controllers;
 
-import com.mehdisarf.StartSpringImplMehdiSarf.controllers.model.Country;
+import com.mehdisarf.StartSpringImplMehdiSarf.model.Country;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,5 +32,19 @@ public class HelloController {
         enemies.add(new Country("South Korea", 120));
 
         return enemies;
+    }
+
+    @RequestMapping("/iran")
+    @ResponseBody
+    public ResponseEntity<Country> iran() {
+
+        Country country = new Country("Iran", 90);
+
+        return ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .header("continent", "Asia")
+                .header("capital", "Tehran")
+                .header("lang", "Persian")
+                .body(country);
     }
 }

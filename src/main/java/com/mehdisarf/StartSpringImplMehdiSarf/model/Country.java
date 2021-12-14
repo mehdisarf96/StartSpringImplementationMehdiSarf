@@ -1,4 +1,4 @@
-package com.mehdisarf.StartSpringImplMehdiSarf.controllers.model;
+package com.mehdisarf.StartSpringImplMehdiSarf.model;
 
 public class Country {
 
